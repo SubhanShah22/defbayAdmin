@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // @mui
 import { alpha } from '@mui/material/styles';
-import { Box, Divider, Typography, Stack, MenuItem } from '@mui/material';
+import { Box, Divider, Typography, Stack, MenuItem, Modal, FormControl, InputLabel, Input, TextField, Button } from '@mui/material';
 // routes
 import { PATH_DASHBOARD, PATH_AUTH } from '../../../routes/paths';
 // hooks
@@ -13,9 +13,15 @@ import useIsMountedRef from '../../../hooks/useIsMountedRef';
 import MyAvatar from '../../../components/MyAvatar';
 import MenuPopover from '../../../components/MenuPopover';
 import { IconButtonAnimate } from '../../../components/animate';
+import axios from '../../../utils/axios';
 
 // ----------------------------------------------------------------------
-
+const CHANGE_PASSWORD = [
+  {
+    label: 'Change Password',
+    linkTo: '/',
+  },
+];
 const MENU_OPTIONS = [
   {
     label: 'Home',
@@ -31,6 +37,21 @@ const MENU_OPTIONS = [
   },
 ];
 
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '30%',
+  bgcolor: 'background.paper',
+  border: '2px solid #ff8d00',
+  boxShadow: 24,
+  p: 4,
+  m: 1,
+  flexDirection: 'column',
+  display: 'flex',
+  borderRadius: '5px',
+};
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
@@ -43,6 +64,17 @@ export default function AccountPopover() {
   const { enqueueSnackbar } = useSnackbar();
 
   const [open, setOpen] = useState(null);
+
+  const [openCP, setOpenCP] = useState(false);
+  const handleOpenCP = () => setOpenCP(true);
+  const handleCloseCP = () => setOpenCP(false);
+
+  const [newPassword, setNewPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState(newPassword);
+  const ChangePassword = async () => {
+    const response = await axios.post('Admin/changepassword?role=superadmin');
+
+  }
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -121,12 +153,59 @@ export default function AccountPopover() {
           ))}
         </Stack> */}
 
+        <Stack sx={{ p: 1 }}>
+          {CHANGE_PASSWORD.map((option) => (
+            <MenuItem key={option.label} onClick={handleOpenCP}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </Stack>
+
         <Divider sx={{ borderStyle: 'dashed' }} />
 
         <MenuItem onClick={handleLogout} sx={{ m: 1 }}>
           Logout
         </MenuItem>
       </MenuPopover>
+
+      <Modal
+        open={openCP}
+        onClose={handleCloseCP}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}
+          component="form"
+          noValidate
+          autoComplete="off"
+        >
+          <Typography variant="h6">
+            Change Your Password
+          </Typography>
+          <TextField
+            id="outlined-password-input"
+            label="Old Password"
+            type="password"
+            autoComplete="old-password"
+            sx={{ m: 1 }}
+          />
+          <TextField
+            id="outlined-password-input"
+            label="New Password"
+            type="password"
+            autoComplete="new-password"
+            sx={{ m: 1 }}
+          />
+          <TextField
+            id="outlined-password-input"
+            label="Confirm Password"
+            type="password"
+            autoComplete="confirm-password"
+            sx={{ m: 1 }}
+          />
+          <Button variant="contained" type="submit" onClick={ChangePassword}>Updated</Button>
+        </Box>
+      </Modal>
     </>
   );
 }

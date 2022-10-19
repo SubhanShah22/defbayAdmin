@@ -68,6 +68,8 @@ export default function Router() {
         { path: 'category', element: <Category /> },
         { path: 'categoryadd', element: <CategoryAdd /> },
         { path: 'categoryedit/:id', element: <CategoryEdit /> },
+        { path: 'recruiter', element: <Recruiter /> },
+        { path: 'applicant', element: <Applicant /> },
         { path: 'ecommerce', element: <GeneralEcommerce /> },
         { path: 'analytics', element: <GeneralAnalytics /> },
         { path: 'banking', element: <GeneralBanking /> },
@@ -169,6 +171,8 @@ const VerifyCode = Loadable(lazy(() => import('../pages/auth/VerifyCode')));
 const Category = Loadable(lazy(() => import('../pages/dashboard/Category')));
 const CategoryAdd = Loadable(lazy(() => import('../sections/@dashboard/category/CategoryAdd')));
 const CategoryEdit = Loadable(lazy(() => import('../sections/@dashboard/category/CategoryEdit')));
+const Recruiter = Loadable(lazy(() => import('../pages/dashboard/Recruiter')));
+const Applicant = Loadable(lazy(() => import('../pages/dashboard/Applicant')));
 const GeneralApp = Loadable(lazy(() => import('../pages/dashboard/GeneralApp')));
 const GeneralEcommerce = Loadable(lazy(() => import('../pages/dashboard/GeneralEcommerce')));
 const GeneralAnalytics = Loadable(lazy(() => import('../pages/dashboard/GeneralAnalytics')));

@@ -36,9 +36,11 @@ export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
     app: path(ROOTS_DASHBOARD, '/app'),
+    category: path(ROOTS_DASHBOARD, '/category'),
     categoryadd: path(ROOTS_DASHBOARD, '/categoryadd'),
     categoryedit: path(ROOTS_DASHBOARD, '/categoryedit'),
-    category: path(ROOTS_DASHBOARD, '/category'),
+    recruiter: path(ROOTS_DASHBOARD, '/recruiter'),
+    applicant: path(ROOTS_DASHBOARD, '/applicant'),
     ecommerce: path(ROOTS_DASHBOARD, '/ecommerce'),
     analytics: path(ROOTS_DASHBOARD, '/analytics'),
     banking: path(ROOTS_DASHBOARD, '/banking'),

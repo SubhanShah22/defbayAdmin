@@ -18,6 +18,7 @@ const ICONS = {
   banking: getIcon('ic_banking'),
   calendar: getIcon('ic_calendar'),
   ecommerce: getIcon('ic_ecommerce'),
+  contact: getIcon('ic_contact'),
   analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
   booking: getIcon('ic_booking'),
@@ -30,6 +31,8 @@ const navConfig = [
     subheader: 'general',
     items: [
       { title: 'dashboard', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
+      { title: 'recruiter', path: PATH_DASHBOARD.general.recruiter, icon: ICONS.user },
+      { title: 'applicant', path: PATH_DASHBOARD.general.applicant, icon: ICONS.user },
       { title: 'category', path: PATH_DASHBOARD.general.category, icon: ICONS.kanban },
     ],
   },
