@@ -20,7 +20,7 @@ import { FormProvider, RHFTextField, RHFSwitch } from '../../../components/hook-
 // ----------------------------------------------------------------------
 
 const COLOR_OPTIONS = [
-  '#00AB55', // theme.palette.primary.main,
+  '#f7931e', // theme.palette.primary.main,
   '#1890FF', // theme.palette.info.main,
   '#54D62C', // theme.palette.success.main,
   '#FFC107', // theme.palette.warning.main,

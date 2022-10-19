@@ -29,16 +29,16 @@ const Loadable = (Component) => (props) => {
 export default function Router() {
   return useRoutes([
     {
-      path: 'auth',
+      path: '/',
+      element: (
+        <GuestGuard>
+          <Login />
+        </GuestGuard>
+      ),
+    },
+    {
+    path: 'auth',
       children: [
-        {
-          path: 'login',
-          element: (
-            <GuestGuard>
-              <Login />
-            </GuestGuard>
-          ),
-        },
         {
           path: 'register',
           element: (
@@ -144,16 +144,16 @@ export default function Router() {
         { path: '*', element: <Navigate to="/404" replace /> },
       ],
     },
-    {
-      path: '/',
-      element: <MainLayout />,
-      children: [
-        { element: <HomePage />, index: true },
-        { path: 'about-us', element: <About /> },
-        { path: 'contact-us', element: <Contact /> },
-        { path: 'faqs', element: <Faqs /> },
-      ],
-    },
+    // {
+    //   path: '/',
+    //   element: <MainLayout />,
+    //   children: [
+    //     { element: <HomePage />, index: true },
+    //     { path: 'about-us', element: <About /> },
+    //     { path: 'contact-us', element: <Contact /> },
+    //     { path: 'faqs', element: <Faqs /> },
+    //   ],
+    // },
     { path: '*', element: <Navigate to="/404" replace /> },
   ]);
 }

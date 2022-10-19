@@ -4,7 +4,7 @@ export default function getColorName(hex) {
   let color;
 
   switch (hex) {
-    case '#00AB55':
+    case '#f7931e':
       color = 'Green';
       break;
     case '#000000':

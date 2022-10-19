@@ -45,7 +45,7 @@ export const FILTER_PRICE_OPTIONS = [
 ];
 
 export const FILTER_COLOR_OPTIONS = [
-  '#00AB55',
+  '#f7931e',
   '#000000',
   '#FFFFFF',
   '#FFC0CB',

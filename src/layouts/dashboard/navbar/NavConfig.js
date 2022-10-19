@@ -30,7 +30,7 @@ const navConfig = [
     subheader: 'general',
     items: [
       { title: 'dashboard', path: PATH_DASHBOARD.general.app, icon: ICONS.dashboard },
-      { title: 'category', path: PATH_DASHBOARD.general.category, icon: ICONS.blog },
+      { title: 'category', path: PATH_DASHBOARD.general.category, icon: ICONS.kanban },
     ],
   },
 

@@ -14,6 +14,7 @@ import Logo from '../../components/Logo';
 import Image from '../../components/Image';
 // sections
 import { LoginForm } from '../../sections/auth/login';
+import logos from '../../img/favicon.png';
 
 // ----------------------------------------------------------------------
 
@@ -70,19 +71,6 @@ export default function Login() {
   return (
     <Page title="Login">
       <RootStyle>
-
-        {mdUp && (
-          <SectionStyle>
-            <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-              Hi, Welcome Back
-            </Typography>
-            <Image
-              alt="login"
-              src="https://minimal-assets-api.vercel.app/assets/illustrations/illustration_login.png"
-            />
-          </SectionStyle>
-        )}
-
         <Container maxWidth="md">
           <ContentStyle>
             <Stack direction="row" alignItems="center" sx={{ mb: 5 }}>
@@ -97,7 +85,8 @@ export default function Login() {
                 <>
                   <Image
                     disabledEffect
-                    src={`https://minimal-assets-api.vercel.app/assets/icons/auth/ic_${method}.png`}
+                    // src={`https://minimal-assets-api.vercel.app/assets/icons/auth/ic_${method}.png`}
+                    src={logos} 
                     sx={{ width: 32, height: 32 }}
                   />
                 </>
