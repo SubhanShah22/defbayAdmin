@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import MUIDataTable from "mui-datatables";
 import { Button, Card, IconButton, Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import axios from '../../../utils/axios';
 import Iconify from "../../../components/Iconify";
 
 
 export default function RecruiterTable() {
-    const navigate = useNavigate();
 
     const [data, setData] = useState([]);
     useEffect(() => {
@@ -63,7 +61,7 @@ export default function RecruiterTable() {
             label: "status",
             options: {
                 customBodyRender: (value, row) => {
-                    return <Button variant="contained" onClick={() => { RecruiterData(row.rowData[0]) }}  >
+                    return <Button variant="contained" onClick={() => { RecruiterData(row.rowData[0]) }}>
                         {
                             value === 'true' ? "Deactivate" : "Activate"
                         }
@@ -78,15 +76,6 @@ export default function RecruiterTable() {
                 filter: true,
                 customBodyRender: (value) => (
                     <Stack direction="row" spacing={2}>
-                      {/* <IconButton
-                        variant="contained"
-                        color="primary"
-                        onClick={() => (
-                            navigate(`/dashboard/Applicantedit/${value}`)
-                        )}
-                      >
-                        <Iconify icon="ant-design:edit-filled" />
-                      </IconButton> */}
                       <IconButton
                         variant="contained"
                         color="primary"

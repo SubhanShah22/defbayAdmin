@@ -13,7 +13,6 @@ import useIsMountedRef from '../../../hooks/useIsMountedRef';
 import MyAvatar from '../../../components/MyAvatar';
 import MenuPopover from '../../../components/MenuPopover';
 import { IconButtonAnimate } from '../../../components/animate';
-import axios from '../../../utils/axios';
 
 // ----------------------------------------------------------------------
 const CHANGE_PASSWORD = [
@@ -69,11 +68,32 @@ export default function AccountPopover() {
   const handleOpenCP = () => setOpenCP(true);
   const handleCloseCP = () => setOpenCP(false);
 
+  const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState(newPassword);
-  const ChangePassword = async () => {
-    const response = await axios.post('Admin/changepassword?role=superadmin');
+  const Token = localStorage.getItem('token')
+  console.log("my token==>",Token)
 
+  const ChangePassword = async () => {
+
+    const myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6ImQ5N2QzYjI3LTAxNTQtNGVmZi1hNTE4LTkyMzc0NmU3NjBmMyIsImVtYWlsIjoiaG5odGVjaEBnbWFpbC5jb20iLCJleHAiOjE2NjY0MjQ3MzcsImlhdCI6MTY2NjMzODMzN30.YlWa1SUByeM4v8z6QB2vullcbXZVCsURoDRbdcH7yCQ");
+
+    const formdata = new FormData();
+    formdata.append("oldpassword", "admin12345");
+    formdata.append("password", "admin1234");
+
+    const requestOptions = {
+      method: 'POST',
+      headers: myHeaders,
+      body: formdata,
+      redirect: 'follow'
+    };
+
+    fetch("https://linkdinn.pythonanywhere.com/Admin/changepassword?role=superadmin", requestOptions)
+      .then(response => response.json())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
   }
 
   const handleOpen = (event) => {
@@ -187,6 +207,7 @@ export default function AccountPopover() {
             label="Old Password"
             type="password"
             autoComplete="old-password"
+            onChange={(e) => setOldPassword(e.target.value)}
             sx={{ m: 1 }}
           />
           <TextField
@@ -194,6 +215,7 @@ export default function AccountPopover() {
             label="New Password"
             type="password"
             autoComplete="new-password"
+            onChange={(e) => setNewPassword(e.target.value)}
             sx={{ m: 1 }}
           />
           <TextField
@@ -201,6 +223,15 @@ export default function AccountPopover() {
             label="Confirm Password"
             type="password"
             autoComplete="confirm-password"
+            onChange={(e) => {
+              setConfirmPassword(e.target.value)
+              if (confirmPassword !== newPassword) {
+                console.log("password not matched")
+              } else {
+
+                setConfirmPassword(e.target.value)
+              }
+            }}
             sx={{ m: 1 }}
           />
           <Button variant="contained" type="submit" onClick={ChangePassword}>Updated</Button>
