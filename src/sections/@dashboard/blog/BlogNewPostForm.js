@@ -93,7 +93,7 @@ export default function BlogNewPostForm() {
 
   const values = watch();
 
-  const onSubmit = async () => {
+  const onSubmit = async () => {  
     try {
       await new Promise((resolve) => setTimeout(resolve, 500));
       reset();

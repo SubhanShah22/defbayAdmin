@@ -5,23 +5,12 @@ import axios from '../../../utils/axios';
 import Iconify from "../../../components/Iconify";
 
 
-export default function RecruiterTable() {
+export default function RecruiterTable(props) {
+    const tabledata = props.props
 
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        RecruiterData()
-    }, [])
+   
 
-    const RecruiterData = async () => {
-        const response = await axios.get(`recruiter/registration`);
-        const { data } = response.data;
-        setData(data);
-    }
-
-    const Delete = async (value) => {
-        const response = await axios.delete(`Admin/RecruiterData?id=${value}`)
-        RecruiterData();
-    }
+   
 
     const columns = [
         {
@@ -50,18 +39,32 @@ export default function RecruiterTable() {
         },
         {
             name: "contact",
-            label: "Contact #",
+            label: "Contact",
             options: {
                 filter: true,
                 sort: true,
             }
         },
         {
+            name: "gender",
+            label: "Gender",
+            options: {
+                filter: true,
+                sort: true,
+            }
+        },
+
+     
+      
+      
+        
+       
+        {
             name: "status",
             label: "status",
             options: {
                 customBodyRender: (value, row) => {
-                    return <Button variant="contained" onClick={() => { RecruiterData(row.rowData[0]) }}>
+                    return <Button variant="contained">
                         {
                             value === 'true' ? "Deactivate" : "Activate"
                         }
@@ -69,24 +72,24 @@ export default function RecruiterTable() {
                 }
             }
         },
-        {
-            name: "id",
-            label: "Action",
-            options: {
-                filter: true,
-                customBodyRender: (value) => (
-                    <Stack direction="row" spacing={2}>
-                      <IconButton
-                        variant="contained"
-                        color="primary"
-                        onClick={() => (Delete(value))}
-                        >
-                        <Iconify icon="ant-design:delete-filled" />
-                    </IconButton>
-                    </Stack>
-                )
-            }
-        },
+        // {
+        //     name: "id",
+        //     label: "Action",
+        //     options: {
+        //         filter: true,
+        //         customBodyRender: (value) => (
+        //             <Stack direction="row" spacing={2}>
+        //               <IconButton
+        //                 variant="contained"
+        //                 color="primary"
+        //                 // onClick={() => (Delete(value))}
+        //                 >
+        //                 <Iconify icon="ant-design:delete-filled" />
+        //             </IconButton>
+        //             </Stack>
+        //         )
+        //     }
+        // },
     ];
 
     const options = {
@@ -96,7 +99,7 @@ export default function RecruiterTable() {
         <Card>
             <MUIDataTable
                 title={""}
-                data={data}
+                data={tabledata}
                 columns={columns}
                 options={{
                     selectableRows: false // <===== will turn off checkboxes in rows

@@ -1,23 +1,59 @@
 import { Link as RouterLink } from 'react-router-dom';
+import {useState,useEffect}  from 'react';
 // @mui
-import { Button, Container } from '@mui/material';
+
+import { Button, Container , Alert } from '@mui/material';
+import TextField from '@mui/material/TextField';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useSnackbar } from 'notistack';
+import LoadingScreen from '../../components/LoadingScreen';
+import BaseUrl from '../../contexts/BaseUrl';
+import Iconify from '../../components/Iconify';
+import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
+import RecruiterTable from '../../sections/@dashboard/recruiter/RecruiterTable';
 // routes
 import { PATH_DASHBOARD } from '../../routes/paths';
 // hooks
 import useSettings from '../../hooks/useSettings';
+import axios from '../../utils/axios';
 // components
 import Page from '../../components/Page';
-import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
-// sections
-import RecruiterTable from '../../sections/@dashboard/recruiter/RecruiterTable';
-import Iconify from '../../components/Iconify';
+
 
 // ----------------------------------------------------------------------
 
 export default function Recruiter() {
   const { themeStretch } = useSettings();
+  const [loader, setLoader] = useState(false);
+  const [data, setData] = useState([]);
+
+
+
+
+  useEffect(() => {
+    RecruiterData()
+   
+  }, [])
+  
+
+  // get category data 
+  const RecruiterData = async () => {
+    setLoader(true)
+    const response = await axios.get(`${BaseUrl.baseUrl}recruiter/registration`);
+    setLoader(false)
+    const { data } = response.data;
+    setData(data);
+  }
 
   return (
+    <>
+    
+    {loader ?  <LoadingScreen/>:null}
+  
     <Page title="Recruiter">
       <Container maxWidth={themeStretch ? false : 'lg'}>
         <HeaderBreadcrumbs
@@ -28,8 +64,10 @@ export default function Recruiter() {
           ]}
         />
 
-        <RecruiterTable />
+        <RecruiterTable props={data} />
       </Container>
     </Page>
+
+    </>
   );
 }

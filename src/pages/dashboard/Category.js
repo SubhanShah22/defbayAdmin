@@ -9,6 +9,8 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { useSnackbar } from 'notistack';
+import LoadingScreen from '../../components/LoadingScreen';
 import BaseUrl from '../../contexts/BaseUrl';
 import Iconify from '../../components/Iconify';
 import HeaderBreadcrumbs from '../../components/HeaderBreadcrumbs';
@@ -31,10 +33,13 @@ export default function Category() {
   const { themeStretch } = useSettings();
   const [open, setOpen] = useState(false);
   const [categoryname, setCategoryname] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
  
  
 
   const [data, setData] = useState([]);
+  const [loader, setLoader] = useState(false);
+
 
 
   const handleClickOpen = () => {
@@ -53,7 +58,11 @@ export default function Category() {
 
   // get category data 
   const CategoryData = async () => {
+    setLoader(true)
+
     const response = await axios.get(`${BaseUrl.baseUrl}Admin/categoryData`);
+    setLoader(false)
+
     const { data } = response.data;
     setData(data);
   }
@@ -62,37 +71,86 @@ export default function Category() {
   // add category data 
 
   const AddData = async () => {
-    const formData = new FormData();
-    formData.append("name", categoryname)
-    const response = await axios.post(`${BaseUrl.baseUrl}Admin/categoryData`, formData);
-    handleClose()
-    CategoryData()
+    try{
+      setLoader(true)
+      const formData = new FormData();
+      formData.append("name", categoryname)
+      const response = await axios.post(`${BaseUrl.baseUrl}Admin/categoryData`, formData);
+      setLoader(false)
+      setCategoryname("")
+
+      handleClose()
+      enqueueSnackbar(response.data.message);
+  
+      CategoryData()
+
+    }
+    catch (error){
+      enqueueSnackbar("something went wrong" , { variant: 'error' });
+
+    }
+  
 
 }
 
 
 const EditData = async (id,editcategory) => {
-  const formData = new FormData();
-  formData.append("id", id)
-  formData.append("name", editcategory)
-  const response = await axios.put(`${BaseUrl.baseUrl}Admin/categoryData`, formData);
-  handleClose()
-  CategoryData()
+
+  try{
+    setLoader(true)
+
+    const formData = new FormData();
+    formData.append("id", id)
+    formData.append("name", editcategory)
+    const response = await axios.put(`${BaseUrl.baseUrl}Admin/categoryData`, formData);
+    setLoader(false)
+
+    handleClose()
+    CategoryData()
+    enqueueSnackbar(response.data.message);
+  
+
+
+  }
+  catch (error){
+    enqueueSnackbar(error , { variant: 'error' });
+
+
+  }
+ 
 
 }
 
 
 const Delete = async (id) => {
-  console.log("delete",id)
-  const response = await axios.delete(`${BaseUrl.baseUrl}Admin/categoryData?id=${id}`).then((response)=>{
+
+  try{
+    setLoader(true)
+
+    console.log("delete",id)
+    const response = await axios.delete(`${BaseUrl.baseUrl}Admin/categoryData?id=${id}`)
+    setLoader(false)
+
     console.log("respponse",response.data.message)
+    enqueueSnackbar(response.data.message);
+    CategoryData()
+
+  }
+
+  catch(error){
+    enqueueSnackbar(error , { variant: 'error' });
+
+
+
+  }
+ 
+
 
    
 
 
-  })
+  
  
-  CategoryData()
   
 
 
@@ -102,6 +160,7 @@ const Delete = async (id) => {
   return (
 
     <>
+   {loader ?  <LoadingScreen/>:null}
   
     <Page title="Category">
       <Container maxWidth={themeStretch ? false : 'lg'}>

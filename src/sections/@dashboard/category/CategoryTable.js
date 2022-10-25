@@ -136,10 +136,9 @@ export default function CategoryTable(props) {
   }}>
         <DialogTitle>Edit Category</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {/* To subscribe to this website, please enter your email address here. We
-            will send updates occasionally. */}
-          </DialogContentText>
+          {/* <DialogContentText>
+          
+          </DialogContentText> */}
           <TextField
             autoFocus
             onChange={(e)=>setEditcategory(e.target.value)}

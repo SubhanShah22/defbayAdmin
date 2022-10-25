@@ -6,24 +6,20 @@ import axios from '../../../utils/axios';
 import Iconify from "../../../components/Iconify";
 
 
-export default function ApplicantTable() {
+export default function ApplicantTable(props) {
+    const tabledata = props.props
+
     const navigate = useNavigate();
 
-    const [data, setData] = useState([]);
-    useEffect(() => {
-        ApplicantData()
-    }, [])
+    const Change = (value)=>{
+        props.status(value)
+       
+      
 
-    const ApplicantData = async () => {
-        const response = await axios.get(`applicant/registration`);
-        const { data } = response.data;
-        setData(data);
-    }
 
-    const Delete = async (value) => {
-        const response = await axios.delete(`Admin/ApplicantData?id=${value}`)
-        ApplicantData();
-    }
+      }
+
+   
 
     const columns = [
         {
@@ -58,16 +54,26 @@ export default function ApplicantTable() {
                 sort: true,
             }
         },
+
         {
             name: "status",
-            label: "status",
+            label: "Status",
             options: {
-                customBodyRender: (value, row) => {
-                    return <Button variant="contained" onClick={() => { ApplicantData(row.rowData[0]) }}  >
-                        {
-                            value === 'true' ? "Deactivate" : "Activate"
-                        }
-                    </Button>
+                customBodyRender: (value, rowData) => {
+                    console.log("value status",value)
+                   
+
+                    return <IconButton
+                    variant="contained"
+                    color="primary"
+                   
+                   
+                  />
+                
+                   
+                  
+                   
+                //   </IconButton>
                 }
             }
         },
@@ -75,29 +81,52 @@ export default function ApplicantTable() {
             name: "id",
             label: "Action",
             options: {
-                filter: true,
-                customBodyRender: (value) => (
-                    <Stack direction="row" spacing={2}>
-                      {/* <IconButton
-                        variant="contained"
-                        color="primary"
-                        onClick={() => (
-                            navigate(`/dashboard/Applicantedit/${value}`)
-                        )}
-                      >
-                        <Iconify icon="ant-design:edit-filled" />
-                      </IconButton> */}
-                      <IconButton
-                        variant="contained"
-                        color="primary"
-                        onClick={() => (Delete(value))}
-                        >
-                        <Iconify icon="ant-design:delete-filled" />
-                    </IconButton>
-                    </Stack>
-                )
+                customBodyRender: (value, rowData) => {
+                    console.log("value",rowData.rowData,value)
+                   
+
+                    return <IconButton
+                    variant="contained"
+                    color="primary"
+                    onClick={() =>Change(value)}
+                   
+                  >
+                     {rowData.rowData[4] === true ?  <Iconify icon="ant-design:check-outlined" />:
+                       <Iconify icon="fluent-mdl2:cancel"/> }
+                   
+                  
+                   
+                  </IconButton>
+                }
             }
         },
+        // {
+        //     name: "id",
+        //     label: "Action",
+        //     options: {
+        //         filter: true,
+        //         customBodyRender: (value) => (
+        //             <Stack direction="row" spacing={2}>
+        //               <IconButton
+        //                 variant="contained"
+        //                 color="primary"
+        //                 onClick={() => (
+        //                     navigate(`/dashboard/Applicantedit/${value}`)
+        //                 )}
+        //               >
+        //                 <Iconify icon="ant-design:edit-filled" />
+        //               </IconButton>
+        //               <IconButton
+        //                 variant="contained"
+        //                 color="primary"
+        //                 // onClick={() => (Delete(value))}
+        //                 >
+        //                 <Iconify icon="ant-design:delete-filled" />
+        //             </IconButton>
+        //             </Stack>
+        //         )
+        //     }
+        // },
     ];
 
     const options = {
@@ -107,7 +136,7 @@ export default function ApplicantTable() {
         <Card>
             <MUIDataTable
                 title={""}
-                data={data}
+                data={tabledata}
                 columns={columns}
                 options={{
                     selectableRows: false // <===== will turn off checkboxes in rows
