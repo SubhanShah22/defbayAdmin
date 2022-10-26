@@ -9,7 +9,13 @@ export default function RecruiterTable(props) {
     const tabledata = props.props
 
    
+    const Change = (value)=>{
+        props.status(value)
+       
+      
 
+
+      }
    
 
     const columns = [
@@ -56,40 +62,47 @@ export default function RecruiterTable(props) {
 
      
       
-      
         
        
         {
             name: "status",
             label: "status",
             options: {
-                customBodyRender: (value, row) => {
-                    return <Button variant="contained">
-                        {
-                            value === 'true' ? "Deactivate" : "Activate"
-                        }
-                    </Button>
+                customBodyRender:(value)=>{
+                    return <IconButton
+                    // variant="contained"
+                    color="primary"
+                   
+                  >
+                     {value === true ? <Button color="primary"  variant="contained">Active</Button>:<Button color="primary"  variant="contained">Deactive</Button>}
+                    
+                   
+                  
+                   
+                  </IconButton>
                 }
             }
         },
-        // {
-        //     name: "id",
-        //     label: "Action",
-        //     options: {
-        //         filter: true,
-        //         customBodyRender: (value) => (
-        //             <Stack direction="row" spacing={2}>
-        //               <IconButton
-        //                 variant="contained"
-        //                 color="primary"
-        //                 // onClick={() => (Delete(value))}
-        //                 >
-        //                 <Iconify icon="ant-design:delete-filled" />
-        //             </IconButton>
-        //             </Stack>
-        //         )
-        //     }
-        // },
+        {
+            name: "id",
+            label: "Action",
+            options: {
+                filter: true,
+                customBodyRender: (value,rowData) => (
+                    <Stack direction="row" spacing={2}>
+                      <IconButton
+                        variant="contained"
+                        color="primary"
+                        onClick={() =>Change(value)}
+
+                        >
+                         {rowData.rowData[5] === true ?  <Iconify icon="ant-design:check-outlined" />:
+                       <Iconify icon="fluent-mdl2:cancel"/> }
+                    </IconButton>
+                    </Stack>
+                )
+            }
+        },
     ];
 
     const options = {

@@ -1,5 +1,5 @@
 // routes
-import { PATH_DASHBOARD } from '../../../routes/paths';
+import { PATH_DASHBOARD,PATH_AUTH } from '../../../routes/paths';
 // components
 import Label from '../../../components/Label';
 import SvgIconStyle from '../../../components/SvgIconStyle';
@@ -22,6 +22,8 @@ const ICONS = {
   analytics: getIcon('ic_analytics'),
   dashboard: getIcon('ic_dashboard'),
   booking: getIcon('ic_booking'),
+  logout: getIcon('ic_logout'),
+
 };
 
 const navConfig = [
@@ -34,6 +36,8 @@ const navConfig = [
       { title: 'recruiter', path: PATH_DASHBOARD.general.recruiter, icon: ICONS.user },
       { title: 'applicant', path: PATH_DASHBOARD.general.applicant, icon: ICONS.user },
       { title: 'category', path: PATH_DASHBOARD.general.category, icon: ICONS.kanban },
+      // { title: 'logout', path: PATH_AUTH.login, icon: ICONS.logout },
+
     ],
   },
 

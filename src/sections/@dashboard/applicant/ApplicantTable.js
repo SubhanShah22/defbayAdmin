@@ -8,6 +8,7 @@ import Iconify from "../../../components/Iconify";
 
 export default function ApplicantTable(props) {
     const tabledata = props.props
+    console.log("table data",tabledata)
 
     const navigate = useNavigate();
 
@@ -59,22 +60,20 @@ export default function ApplicantTable(props) {
             name: "status",
             label: "Status",
             options: {
-                customBodyRender: (value, rowData) => {
-                    console.log("value status",value)
-                   
-
-                    return <IconButton
-                    variant="contained"
-                    color="primary"
-                   
-                   
-                  />
+               customBodyRender:(value)=>{
+                return <IconButton
+                // variant="contained"
+                color="primary"
+               
+              >
+                 {value === true ? <Button color="primary"  variant="contained">Active</Button>:<Button color="primary"  variant="contained">Deactive</Button>}
                 
-                   
-                  
-                   
-                //   </IconButton>
-                }
+               
+              
+               
+              </IconButton>
+            }
+                
             }
         },
         {

@@ -30,6 +30,7 @@ export default function Recruiter() {
   const { themeStretch } = useSettings();
   const [loader, setLoader] = useState(false);
   const [data, setData] = useState([]);
+  const { enqueueSnackbar } = useSnackbar();
 
 
 
@@ -49,6 +50,19 @@ export default function Recruiter() {
     setData(data);
   }
 
+
+   // get applicant data 
+   const RecruiterStatus = async (value) => {
+    setLoader(true)
+    const response = await axios.get(`${BaseUrl.baseUrl}/Admin/accountActivation?id=${value}`);
+    setLoader(false)
+    enqueueSnackbar(response.data.message);
+    RecruiterData()
+    
+    console.log("status data",response.data.message)
+   
+  }
+
   return (
     <>
     
@@ -64,7 +78,7 @@ export default function Recruiter() {
           ]}
         />
 
-        <RecruiterTable props={data} />
+        <RecruiterTable props={data} status={RecruiterStatus} />
       </Container>
     </Page>
 

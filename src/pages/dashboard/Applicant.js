@@ -48,7 +48,7 @@ export default function Applicant() {
     const response = await axios.get(`${BaseUrl.baseUrl}applicant/registration`);
     setLoader(false)
     const { data } = response.data;
-    console.log("applicant data",data)
+    console.log("applicant data get",data)
     setData(data);
   }
 
@@ -59,6 +59,7 @@ export default function Applicant() {
     const response = await axios.get(`${BaseUrl.baseUrl}/Admin/accountActivation?id=${value}`);
     setLoader(false)
     enqueueSnackbar(response.data.message);
+    ApplicantData()
     
     console.log("status data",response.data.message)
    
